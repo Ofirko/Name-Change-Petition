@@ -38,15 +38,15 @@ app.get("/thanks", (req, res) => {
 });
 
 app.get("/signers", (req, res) => {
-    db.getAllSigners().then(function(signers) {
-        // console.log("signers are here", signers);
-    });
-    // .then(results => {
-    //     console.log("results:", results);
-    // })
-    // .catch(err => {
-    //     console.log(err);
-    // });
+    db.getAllSigners()
+        .then(quer => {
+            res.render("signers", {
+                results: quer.rows
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 app.post("/petition", (req, res) => {
@@ -63,6 +63,7 @@ app.post("/petition", (req, res) => {
             req.body.visual
         ).then(function(val) {
             console.log(val);
+            //SET COOKIE HERE
             res.redirect("/thanks");
         });
     }
