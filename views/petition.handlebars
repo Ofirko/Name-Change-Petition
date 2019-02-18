@@ -1,9 +1,10 @@
 <h1>WELCOME TO MY PETITION</h1>
-<form>
-    <input type= "text" value="name"> </input>
-    <input type= "text" value="fname"> </input>
-    <input type= "hidden" value="signature"> </input>
-<canvas id="signature" height="100px" width="350px" style="border: 1px black solid"> </canvas>
+<form method="POST">
+    <input type= "text" name="firstname"> </input>
+    <input type= "text" name="lastname"> </input>
+    <input id="imgUrl" type= "hidden" name="visual"> </input>
 <button> SEND </button>
  </form>
+ <canvas id="signature" height="100px" width="350px" style="border: 1px black solid"> </canvas>
+
  <script type="text/javascript" src= "script.js"></script>
