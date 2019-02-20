@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
+const config = require("./config");
 const spicedPg = require("spiced-pg");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
@@ -14,7 +15,7 @@ app.use(
 
 app.use(
     cookieSession({
-        secret: "only a despised bandit swallows cold ketchup",
+        secret: config.cookieSecret,
         maxAge: 1000 * 60 * 60 * 24 * 7 * 2
     })
 );

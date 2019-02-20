@@ -1,7 +1,12 @@
 var spicedPg = require("spiced-pg");
+const config = require("./config");
 
 var db = spicedPg(
-    "postgres:ofirkatz:12345678@localhost:5432/wintergreen-petition"
+    "postgres:" +
+        config.user +
+        ":" +
+        config.pass +
+        "@localhost:5432/wintergreen-petition"
 );
 
 module.exports.getAllSigners = function getAllSigners() {
