@@ -5,6 +5,8 @@ const config = require("./config");
 const spicedPg = require("spiced-pg");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
+const csurf = require("csurf");
+
 app.use(
     bodyParser.urlencoded({
         extended: false
@@ -19,6 +21,12 @@ app.use(
         maxAge: 1000 * 60 * 60 * 24 * 7 * 2
     })
 );
+
+app.use(csurf());
+app.use(function(req, res, next) {
+    res.locals.csrfToken = req.csrfToken();
+    next();
+});
 
 var hb = require("express-handlebars");
 app.engine("handlebars", hb());
@@ -36,9 +44,13 @@ app.get("/register", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-    res.render("login", {
-        //GIVE IT VALUES HERE
-    });
+    if (req.session.user != undefined) {
+        res.redirect("/petition");
+    } else {
+        res.render("login", {
+            //GIVE IT VALUES HERE
+        });
+    }
 });
 
 app.get("/devUser", (req, res) => {
@@ -163,11 +175,19 @@ app.post("/login", (req, res) => {
     if (req.body.email == `` || req.body.password == ``) {
         res.render("error", {});
     } else {
-        db.fetchUser(req.body.email, req.body.password).then(function(val) {
-            console.log(val.rows[0]);
-            req.session.user = val.rows[0];
-            res.redirect("/petition");
-        });
+        console.log(req.body.email);
+        console.log(req.body.password);
+        db.fetchUser(req.body.email)
+            .then(function(val) {
+                console.log(val.rows[0].password);
+                if (req.body.password == val.rows[0].password) {
+                    req.session.user = val.rows[0];
+                    res.redirect("/petition");
+                } else {
+                    res.render("error", {});
+                }
+            })
+            .catch(res.render("error", {}));
     }
 });
 
@@ -191,12 +211,7 @@ app.listen(8080, () => console.log("Listening!"));
 //
 //
 //
-//
-//
-// Since users must be logged in to sign the petition,
-// there is no need to ask them for their names on that form.
-// Remove those inputs and use the first name and last name that is already stored.
-
+//LOGIN PAGE DOESNT WORK
 // You should add to this object properties that you are likely to use frequently,
 // such as the user's first name, last name, and signature id if the user has signed the petition.
 //

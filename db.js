@@ -48,10 +48,7 @@ module.exports.addUser = function addUser(
     );
 };
 
-module.exports.fetchUser = function fetchUser() {
-    return db.query(
-        "SELECT * FROM users WHERE email = $1 && password = $2 RETURNING *",
-        [email, password]
-    );
+module.exports.fetchUser = function fetchUser(email) {
+    return db.query("SELECT * FROM users WHERE email = $1 ", [email]);
     // INTENDING IT TO RETURN CURRENT USER VALUES
 };

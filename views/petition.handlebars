@@ -1,6 +1,7 @@
 <h1>WELCOME TO MY PETITION</h1>
 <form method="POST">
     <input id="imgUrl" type= "hidden" name="visual"> </input>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
 <button> SEND </button>
  </form>
  <canvas id="signature" height="100px" width="350px" style="border: 1px black solid"> </canvas>
