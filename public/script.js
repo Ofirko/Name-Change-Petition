@@ -16,13 +16,14 @@ if (canv != null) {
         if (signing == true) {
             draw.lineTo(e.offsetX, e.offsetY);
             draw.stroke();
+            curl.value = canv.toDataURL();
         }
     });
 
     canv.addEventListener("mouseup", function() {
         draw.stroke();
         curl.value = canv.toDataURL();
-        console.log("canvas url:", canv.toDataURL());
+        // console.log("canvas url:", canv.toDataURL());
         signing = false;
     });
 }
