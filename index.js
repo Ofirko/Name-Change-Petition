@@ -41,6 +41,18 @@ app.get("/login", (req, res) => {
     });
 });
 
+app.get("/devUser", (req, res) => {
+    db.getAllUsers().then(({ rows }) => {
+        res.send(rows);
+    });
+});
+
+app.get("/devSignatures", (req, res) => {
+    db.getAllSigners().then(({ rows }) => {
+        res.send(rows);
+    });
+});
+
 app.get("/petition", (req, res) => {
     if (req.session.user == undefined) {
         res.redirect("/register");
@@ -107,8 +119,8 @@ app.post("/petition", (req, res) => {
         res.render("error", {});
     } else {
         let timestamp = new Date().getTime();
-        console.log(req.session.user.user_id);
-        db.addSigner(req.body.visual, req.session.user.user_id, timestamp).then(
+        console.log("user_id:" + req.session.user.id);
+        db.addSigner(req.body.visual, req.session.user.id, timestamp).then(
             function(val) {
                 console.log(val.rows[0].id);
                 req.session.signed = val.rows[0].id;

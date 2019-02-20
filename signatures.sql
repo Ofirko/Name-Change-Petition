@@ -5,8 +5,7 @@ CREATE TABLE signatures (
     id SERIAL primary key,
     sigraphic TEXT NOT NULL,
     timestamp VARCHAR(100),
-    user_id int
-    -- NOT NULL
+    user_id int UNIQUE NOT NULL
 );
 
 CREATE TABLE users (
