@@ -13,7 +13,7 @@ var db = spicedPg(
 
 module.exports.getAllSigners = function getAllSigners() {
     return db.query(
-        "SELECT users.fname AS fname, users.lname AS lname FROM users JOIN signatures ON users.id = signatures.user_id"
+        "SELECT users.fname AS fname, users.lname AS lname , user_profiles.age AS age, user_profiles.city AS city, user_profiles.url AS url FROM users JOIN signatures ON users.id = signatures.user_id LEFT JOIN user_profiles ON users.id = user_profiles.user_id"
     );
 };
 
@@ -51,4 +51,20 @@ module.exports.addUser = function addUser(
 module.exports.fetchUser = function fetchUser(email) {
     return db.query("SELECT * FROM users WHERE email = $1 ", [email]);
     // INTENDING IT TO RETURN CURRENT USER VALUES
+};
+
+module.exports.addUserProfile = function addUserProfile(
+    age,
+    city,
+    url,
+    user_id
+) {
+    return db.query(
+        "INSERT INTO user_profiles (age, city, url, user_id) VALUES($1, $2, $3, $4) RETURNING *",
+        [age, city, url, user_id]
+    );
+};
+
+module.exports.getAllProfiles = function getAllProfiles() {
+    return db.query("SELECT * FROM user_profiles");
 };

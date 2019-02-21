@@ -42,7 +42,7 @@ p {
     width: 70%;
 }
 
-img {
+div img {
     float: left;
     position: relative;
     left: 5%;

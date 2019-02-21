@@ -66,6 +66,24 @@ function checkPassword(textEnteredInLoginForm, hashedPasswordFromDatabase) {
     });
 }
 
+app.get("/devUser", (req, res) => {
+    db.getAllUsers().then(({ rows }) => {
+        res.send(rows);
+    });
+});
+
+app.get("/devSignatures", (req, res) => {
+    db.getAllSigners().then(({ rows }) => {
+        res.send(rows);
+    });
+});
+
+app.get("/devProfiles", (req, res) => {
+    db.getAllProfiles().then(({ rows }) => {
+        res.send(rows);
+    });
+});
+
 app.get("/register", (req, res) => {
     if (req.session.user != undefined) {
         res.redirect("/petition");
@@ -88,16 +106,15 @@ app.get("/login", (req, res) => {
     }
 });
 
-app.get("/devUser", (req, res) => {
-    db.getAllUsers().then(({ rows }) => {
-        res.send(rows);
-    });
-});
-
-app.get("/devSignatures", (req, res) => {
-    db.getAllSigners().then(({ rows }) => {
-        res.send(rows);
-    });
+app.get("/profile", (req, res) => {
+    if (req.session.user == undefined) {
+        res.redirect("/register");
+    } else {
+        res.render("profile", {
+            layout: "main"
+            //GIVE IT VALUES HERE
+        });
+    }
 });
 
 app.get("/petition", (req, res) => {
@@ -142,7 +159,7 @@ app.get("/signers", (req, res) => {
         db.getAllSigners()
             .then(quer => {
                 for (var i = 0; i < quer.rows.length; i++) {
-                    console.log(quer.rows[i].user_id);
+                    console.log(quer.rows[i].age);
                 }
 
                 res.render("signers", {
@@ -202,7 +219,7 @@ app.post("/register", (req, res) => {
                     .then(function(val) {
                         console.log(val.rows[0]);
                         req.session.user = val.rows[0];
-                        res.redirect("/petition");
+                        res.redirect("/profile");
                     })
                     .catch(err => {
                         console.log(err);
@@ -235,12 +252,61 @@ app.post("/login", (req, res) => {
     }
 });
 
+app.post("/profile", (req, res) => {
+    console.log("user id:" + req.session.user.id);
+    db.addUserProfile(
+        req.body.age,
+        req.body.city,
+        req.body.homepage,
+        req.session.user.id
+    )
+        .then(function() {
+            res.redirect("/petition");
+        })
+        .catch(err => {
+            console.log(err);
+            res.render("error", {});
+        });
+});
+
 app.use(express.static("./public"));
 
 app.listen(8080, () => console.log("Listening!"));
 
 //
 
+//
+//
+// All of the fields in this form are optional.
+//
+// On the page listing all of the people who have signed the petition,
+// show the additional profile information that is available.
+
+// In the case of the homepage url,
+// do not show it but rather link the name with the saved url in the href attribute.
+//The city names should also be links. When these links are clicked,
+// users should be directed to a new page that shows only the people who have signed the petition that live in that city.
+// Additionally, you should now make the following changes:
+//
+// Change the signatures table so that it no longer includes columns for first and last name.
+// When showing the list of people who have signed the petition, get their names by joining the users table.
+//
+// Change the query that retrieves information from the users table by email address
+// so that it also gets data from the signatures table.
+// Thus you will be able to know whether the user has signed the petition or not as soon as they log in.
+//
+// NOTA BENE: Before you put the url a user specifies into the href attribute of a link,
+// you must make sure that it begins with either "http://" or "https://".
+// This is not just to ensure that the link goes somewhere outside of your site, althoug that is a benefit.
+// It is also important for security. Since browsers support Javascript URLs,
+// we must make sure that a malicious user can't create a link that runs Javascript code when other users click on it.
+//  You can decide whether to check the url when the user inputs it (before you insert it into the database)
+//   or when you get it out of the database (before you pass it to your template).
+//   If it doesn't start with "http://" or "https://", do not put it in an href attribute.
+
+//
+//
+//
 // ADD HELMET, X-Frame-Options, Content-Security-Policy
 //BUILD MAIN
 //FIX ERROR HANDLEBAR
