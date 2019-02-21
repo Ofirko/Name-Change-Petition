@@ -66,6 +66,29 @@ function checkPassword(textEnteredInLoginForm, hashedPasswordFromDatabase) {
     });
 }
 
+app.get("/signers/:cityname", (req, res) => {
+    let city = req.params.cityname;
+
+    if (req.session.user == undefined) {
+        res.redirect("/register");
+    } else {
+        db.getCitySigners(city)
+            .then(quer => {
+                for (var i = 0; i < quer.rows.length; i++) {
+                    console.log(quer.rows[i].age);
+                }
+                res.render("signers", {
+                    layout: "main",
+                    results: quer.rows,
+                    city: city
+                });
+            })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+});
+
 app.get("/devUser", (req, res) => {
     db.getAllUsers().then(({ rows }) => {
         res.send(rows);
@@ -277,19 +300,8 @@ app.listen(8080, () => console.log("Listening!"));
 
 //
 //
-// All of the fields in this form are optional.
 //
-// On the page listing all of the people who have signed the petition,
-// show the additional profile information that is available.
-
-// In the case of the homepage url,
-// do not show it but rather link the name with the saved url in the href attribute.
-//The city names should also be links. When these links are clicked,
-// users should be directed to a new page that shows only the people who have signed the petition that live in that city.
 // Additionally, you should now make the following changes:
-//
-// Change the signatures table so that it no longer includes columns for first and last name.
-// When showing the list of people who have signed the petition, get their names by joining the users table.
 //
 // Change the query that retrieves information from the users table by email address
 // so that it also gets data from the signatures table.
@@ -305,7 +317,7 @@ app.listen(8080, () => console.log("Listening!"));
 //   If it doesn't start with "http://" or "https://", do not put it in an href attribute.
 
 //
-//
+//layout doesnt work for city pages
 //
 // ADD HELMET, X-Frame-Options, Content-Security-Policy
 //BUILD MAIN
@@ -316,6 +328,8 @@ app.listen(8080, () => console.log("Listening!"));
 //
 //
 //
+//PROFILE fields in this form are optional.
+
 //LOGIN PAGE DOESNT WORK
 // You should add to this object properties that you are likely to use frequently,
 // such as the user's first name, last name, and signature id if the user has signed the petition.

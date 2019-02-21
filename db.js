@@ -68,3 +68,10 @@ module.exports.addUserProfile = function addUserProfile(
 module.exports.getAllProfiles = function getAllProfiles() {
     return db.query("SELECT * FROM user_profiles");
 };
+
+module.exports.getCitySigners = function getCitySigners(name) {
+    return db.query(
+        "SELECT users.fname AS fname, users.lname AS lname , user_profiles.age AS age, user_profiles.city AS city, user_profiles.url AS url FROM users JOIN signatures ON users.id = signatures.user_id LEFT JOIN user_profiles ON users.id = user_profiles.user_id WHERE user_profiles.city = $1",
+        [name]
+    );
+};

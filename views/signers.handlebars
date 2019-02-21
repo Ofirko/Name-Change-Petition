@@ -1,4 +1,17 @@
-<h1>HERE IS A LIST OF THE SIGNERS</h1>
+<h1>HERE IS A LIST OF THE SIGNERS
+    {{#if city}}
+IN {{city}}
+    {{/if}}
+
+</h1>
 {{#results}}
-<h1>{{this.fname}} {{this.lname}} {{this.age}} {{this.city}} {{this.url}}</h1>
+<h1>
+{{#if this.url}}
+<a href="{{this.url}}">{{this.fname}} {{this.lname}}</a>
+{{else}} {{this.fname}} {{this.lname}}
+{{/if}}
+{{this.age}}
+
+<a href= "/signers/{{this.city}}">{{this.city}}</a>
+</h1>
 {{/results}}

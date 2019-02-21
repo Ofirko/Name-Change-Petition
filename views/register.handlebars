@@ -1,9 +1,9 @@
 <h1>PLEASE REGISTER</h1>
 <form method="POST">
-    <input type= "email" name="email" placeholder="E-mail address"> </input>
-    <input type= "text" name="firstname" placeholder="First name"> </input>
-    <input type= "text" name="lastname" placeholder="Last name"> </input>
-    <input type= "password" name="password" placeholder="Password"> </input>
+    <input type= "email" name="email" placeholder="E-mail address" required> </input>
+    <input type= "text" name="firstname" placeholder="First name" required> </input>
+    <input type= "text" name="lastname" placeholder="Last name" required> </input>
+    <input type= "password" name="password" placeholder="Password" required> </input>
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
 <button> SEND </button>
 <div> Already signed? <a href="/login">LOG IN!</a>

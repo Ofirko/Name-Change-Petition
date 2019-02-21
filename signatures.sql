@@ -23,5 +23,5 @@ CREATE TABLE user_profiles (
     age INT,
     city VARCHAR(100),
     url VARCHAR(100),
-    user_id INT NOT NULL
+    user_id INT UNIQUE NOT NULL
 );
