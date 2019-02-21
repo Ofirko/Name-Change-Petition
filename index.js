@@ -6,6 +6,7 @@ const spicedPg = require("spiced-pg");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
+var bcrypt = require("bcryptjs");
 
 app.use(
     bodyParser.urlencoded({
@@ -33,11 +34,44 @@ app.engine("handlebars", hb());
 
 app.set("view engine", "handlebars");
 
+//BCRYPT
+function hashPassword(plainTextPassword) {
+    return new Promise(function(resolve, reject) {
+        bcrypt.genSalt(function(err, salt) {
+            if (err) {
+                return reject(err);
+            }
+            bcrypt.hash(plainTextPassword, salt, function(err, hash) {
+                if (err) {
+                    return reject(err);
+                }
+                resolve(hash);
+            });
+        });
+    });
+}
+function checkPassword(textEnteredInLoginForm, hashedPasswordFromDatabase) {
+    return new Promise(function(resolve, reject) {
+        bcrypt.compare(
+            textEnteredInLoginForm,
+            hashedPasswordFromDatabase,
+            function(err, doesMatch) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(doesMatch);
+                }
+            }
+        );
+    });
+}
+
 app.get("/register", (req, res) => {
     if (req.session.user != undefined) {
         res.redirect("/petition");
     } else {
         res.render("register", {
+            layout: "main"
             //GIVE IT VALUES HERE
         });
     }
@@ -48,6 +82,7 @@ app.get("/login", (req, res) => {
         res.redirect("/petition");
     } else {
         res.render("login", {
+            layout: "main"
             //GIVE IT VALUES HERE
         });
     }
@@ -71,6 +106,7 @@ app.get("/petition", (req, res) => {
     } else {
         if (req.session.signed == undefined) {
             res.render("petition", {
+                layout: "main"
                 //GIVE IT VALUES HERE
             });
         } else {
@@ -89,6 +125,7 @@ app.get("/thanks", (req, res) => {
         db.getCurrentUserSig(req.session.signed)
             .then(function(cur) {
                 res.render("thanks", {
+                    layout: "main",
                     current: cur.rows[0].sigraphic
                 });
             })
@@ -109,6 +146,7 @@ app.get("/signers", (req, res) => {
                 }
 
                 res.render("signers", {
+                    layout: "main",
                     results: quer.rows
                 });
             })
@@ -152,17 +190,24 @@ app.post("/register", (req, res) => {
         res.render("error", {});
     } else {
         let timestamp = new Date().getTime();
-        db.addUser(
-            req.body.firstname,
-            req.body.lastname,
-            req.body.email,
-            req.body.password,
-            timestamp
-        )
-            .then(function(val) {
-                console.log(val.rows[0]);
-                req.session.user = val.rows[0];
-                res.redirect("/petition");
+        hashPassword(req.body.password)
+            .then(hash => {
+                db.addUser(
+                    req.body.firstname,
+                    req.body.lastname,
+                    req.body.email,
+                    hash,
+                    timestamp
+                )
+                    .then(function(val) {
+                        console.log(val.rows[0]);
+                        req.session.user = val.rows[0];
+                        res.redirect("/petition");
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        res.render("error", {});
+                    });
             })
             .catch(err => {
                 console.log(err);
@@ -176,26 +221,19 @@ app.post("/login", (req, res) => {
         res.render("error", {});
     } else {
         console.log(req.body.email);
-        console.log(req.body.password);
         db.fetchUser(req.body.email)
             .then(function(val) {
                 console.log(val.rows[0].password);
-                if (req.body.password == val.rows[0].password) {
-                    req.session.user = val.rows[0];
-                    res.redirect("/petition");
-                } else {
-                    res.render("error", {});
-                }
+                checkPassword(req.body.password, val.rows[0].password)
+                    .then(function(val) {
+                        req.session.user = val.rows[0];
+                        res.redirect("/petition");
+                    })
+                    .catch(res.render("error", {}));
             })
             .catch(res.render("error", {}));
     }
 });
-
-// app.post("/login", (req, res) => {
-//     res.render("petition", {
-//         //GIVE IT VALUES HERE
-//     });
-// });
 
 app.use(express.static("./public"));
 
@@ -203,6 +241,7 @@ app.listen(8080, () => console.log("Listening!"));
 
 //
 
+// ADD HELMET, X-Frame-Options, Content-Security-Policy
 //BUILD MAIN
 //FIX ERROR HANDLEBAR
 
