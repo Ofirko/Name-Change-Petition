@@ -1,25 +1,68 @@
-<h1>WELCOME TO MY PETITION</h1>
-<form method="POST">
+<h1>SIGN NOW TO MAKE NAME CHANGE EASIER IN GERMANY</h1>
     <div>
-        <h2> GOOD FOR THIS REASON </h2>
-        <img src="/assets/selfexpress.png" alt="self express">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
-    <div>
-        <h2> GOOD FOR ANOTHER REASON </h2>
-        <img src="/assets/domesticviolence.png" alt="domestic violence">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
-    <div>
-        <h2> GOOD FOR A LAST REASON </h2>
-        <img src="/assets/Trans.svg" alt="trans flag">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
+        <p>
 
+
+
+        </p>
+    </div>
+    <div>
+        <h2> GOOD FOR PEOPLE'S SELF EXPRESSION </h2>
+        <img src="/assets/selfexpress.png" alt="self express" id="self">
+        <p>
+            When we are born our parents choose our name, our clothes, who is allowed to hold us, who gets to socialize with us,
+             maybe even our religion. As we grow older we tend to choose our own style, clothes, our friends and surroundings,
+              we also tend to have our own take on our name. A name defines how people see us in every situation,
+               and yet in Germany it’s illegal to change your name, if you wish to.
+        </p><p>
+               The actual reasons to change a name can be manifold: if you simply dislike your current name,
+                if you believe in a different religion now, that offers you a new name,
+                 if you simply want to disconnect from your family or parts of it,
+                  if you identify differently than your parents anticipated when choosing your name
+                  or if you have to consider security reasons.
+        </p>
+        <!-- <p>
+
+               In Nazi-Germany and the Weimar Republic forced name changes for non-Arians and immigrants were quite common as well,
+                reclaiming those old family names is not legally possible for many today either.
+        </p><p>
+               The bureaucratic argument, that name changes would cause too much confusion,
+               is easy to diffuse with a look to countries like the US or Israel that manage to do name changes with almost no effort,
+               while still easily managing their population registries in an orderly fashion.
+        </p> -->
+    </div>
+    <div>
+        <h2> GOOD FOR DOMESTIC ABUSE SURVIVORS </h2>
+        <img src="/assets/domesticviolence.png" alt="domestic violence" id="domestic">
+        <p>
+            For victims and survivors of domestic abuse, stalking or persecution of any kind,
+            a simplified name change law could mean higher chances of avoiding their perpetrators or an easier second chance in life.
+            For some, name change could mean avoiding a life in danger.
+        </p>
+
+    </div>
+    <div>
+        <h2> GOOD FOR THE TRANS* COMMUNITY </h2>
+        <img src="/assets/Trans.svg" alt="trans flag" id="trans">
+        <p>
+        For trans* identifying people or many other queer individuals,
+         a name change today sadly requires plenty of bureaucratic work,
+         which adds to the mental load that already exists during coming out and sex reassignment surgeries.
+         A simplified and more liberal name law will give trans* people an easier time in front of authorities - being recognized in their chosen name.
+        </p>
+    </div>
+    <div id="bottomline">
+    Name changes can bring justice and visibility at no one’s expense.
+    All it takes is a law reform, that you can support with your signature.
+    <form method="POST">
     <input id="imgUrl" type= "hidden" name="visual"> </input>
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
 <button> I AGREE ! </button>
  </form>
+ {{#if error}}
+ <h3> Please sign on the canvas below </h3>
+ {{/if}}
  <canvas id="signature" height="100px" width="350px" style="border: 1px black solid"> </canvas>
+</div>
 
  <script type="text/javascript" src= "script.js"></script>

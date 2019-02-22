@@ -80,7 +80,7 @@ app.get("/signers/:cityname", (req, res) => {
                 res.render("signers", {
                     layout: "main",
                     results: quer.rows,
-                    city: city
+                    city: city.toUpperCase()
                 });
             })
             .catch(err => {
@@ -113,7 +113,6 @@ app.get("/register", (req, res) => {
     } else {
         res.render("register", {
             layout: "main"
-            //GIVE IT VALUES HERE
         });
     }
 });
@@ -206,7 +205,10 @@ app.post("/petition", (req, res) => {
         //         "req.body.visual:" +
         //         req.body.visual
         // );
-        res.render("error", {});
+        res.render("petition", {
+            layout: "main",
+            error: "unsigned"
+        });
     } else {
         let timestamp = new Date().getTime();
         console.log("user_id:" + req.session.user.id);
@@ -227,7 +229,11 @@ app.post("/register", (req, res) => {
         req.body.email == `` ||
         req.body.password == ``
     ) {
-        res.render("error", {});
+        res.render("register", {
+            layout: "main",
+            err: "err"
+            // errpass: errpass
+        });
     } else {
         let timestamp = new Date().getTime();
         hashPassword(req.body.password)
@@ -245,13 +251,19 @@ app.post("/register", (req, res) => {
                         res.redirect("/profile");
                     })
                     .catch(err => {
-                        console.log(err);
-                        res.render("error", {});
+                        console.log(err.code);
+                        res.render("register", {
+                            layout: "main",
+                            code: err.code
+                        });
                     });
             })
-            .catch(err => {
-                console.log(err);
-                res.render("error", {});
+            .catch(() => {
+                res.render("register", {
+                    layout: "main",
+                    err: "err"
+                    // errpass: errpass
+                });
             });
     }
 });
@@ -276,20 +288,29 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/profile", (req, res) => {
-    console.log("user id:" + req.session.user.id);
-    db.addUserProfile(
-        req.body.age,
-        req.body.city,
-        req.body.homepage,
-        req.session.user.id
-    )
-        .then(function() {
-            res.redirect("/petition");
-        })
-        .catch(err => {
-            console.log(err);
-            res.render("error", {});
-        });
+    if (req.body.age || req.body.city || req.body.homepage) {
+        if (
+            req.body.homepage.indexOf("http://") != 0 &&
+            req.body.homepage.indexOf("https://") != 0
+        ) {
+            req.body.homepage = "http://" + req.body.homepage;
+        }
+        db.addUserProfile(
+            req.body.age || null,
+            req.body.city,
+            req.body.homepage,
+            req.session.user.id
+        )
+            .then(function() {
+                res.redirect("/petition");
+            })
+            .catch(err => {
+                console.log(err);
+                res.render("error", {});
+            });
+    } else {
+        res.redirect("/petition");
+    }
 });
 
 app.use(express.static("./public"));
@@ -300,8 +321,6 @@ app.listen(8080, () => console.log("Listening!"));
 
 //
 //
-//
-// Additionally, you should now make the following changes:
 //
 // Change the query that retrieves information from the users table by email address
 // so that it also gets data from the signatures table.

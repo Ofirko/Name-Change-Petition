@@ -34,7 +34,7 @@ button {
     font-size: 12px;
 }
 
-p {
+div p {
     float: right;
     position: relative;
     text-align: left;
@@ -46,12 +46,55 @@ div img {
     float: left;
     position: relative;
     left: 5%;
-    top: 30px;
     width: 80px;
     height: 80px;
-    display: inline-block;
+    animation-name: pop;
+    animation-duration: 1s;
+}
+
+#trans {
+    top: 20px;
+}
+
+#self {
+    top: 85px;
+}
+
+#domestic {
+    top: 5px;
+}
+
+#sig {
+    position: relative;
+    top: 60px;
+    border: 1px solid black;
+    animation-name: pop;
+    animation-duration: 1s;
 }
 
 div {
     display: inline-block;
+}
+
+@keyframes pop {
+    from {
+        opacity: 0;
+        top: 10em;
+    }
+    to {
+    }
+}
+
+p a {
+    position: relative;
+    top: 100px;
+}
+
+#bottomline {
+    position: relative;
+    top: 30px;
+}
+
+h3 {
+    color: tomato;
 }
