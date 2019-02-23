@@ -16,7 +16,7 @@ app.use(
 
 // app.use(express.static(__dirname + "/public"));
 
-app.get("/*", (req, res) => {
+app.get("/", (req, res) => {
     res.redirect("/register");
 });
 
