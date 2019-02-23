@@ -16,9 +16,13 @@ app.use(
 
 // app.use(express.static(__dirname + "/public"));
 
+app.get("/*", (req, res) => {
+    res.redirect("/register");
+});
+
 app.use(
     cookieSession({
-        secret: config.cookieSecret,
+        secret: process.env.cookieSecret || config.cookieSecret,
         maxAge: 1000 * 60 * 60 * 24 * 7 * 2
     })
 );
@@ -67,7 +71,7 @@ function checkPassword(textEnteredInLoginForm, hashedPasswordFromDatabase) {
 }
 
 app.get("/signers/:cityname", (req, res) => {
-    let city = req.params.cityname;
+    let city = req.params.cityname.toLowerCase();
 
     if (req.session.user == undefined) {
         res.redirect("/register");
@@ -128,6 +132,15 @@ app.get("/login", (req, res) => {
     }
 });
 
+app.get("/logout", (req, res) => {
+    if (req.session.user != undefined) {
+        req.session.user = undefined;
+        res.redirect("/register");
+    } else {
+        res.redirect("/petition");
+    }
+});
+
 app.get("/profile", (req, res) => {
     console.log(req.session.profile);
     if (req.session.user == undefined) {
@@ -147,7 +160,10 @@ app.get("/profile/edit", (req, res) => {
         res.redirect("/register");
     } else {
         if (req.session.profile == undefined) {
-            req.session.profile = { age: "", city: "", url: "" };
+            req.session.profile = {
+                age: ""
+                // , city: "", url: ""
+            };
         }
         console.log("profile existing:", req.session.profile);
         res.render("edit", {
@@ -187,9 +203,11 @@ app.get("/thanks", (req, res) => {
     } else {
         db.getCurrentUserSig(req.session.signed)
             .then(function(cur) {
+                let fname = req.session.user.fname;
                 res.render("thanks", {
                     layout: "main",
-                    current: cur.rows[0].sigraphic
+                    current: cur.rows[0].sigraphic,
+                    fname: fname.toUpperCase()
                 });
             })
             .catch(err => {
@@ -207,7 +225,7 @@ app.get("/signers", (req, res) => {
                 for (var i = 0; i < quer.rows.length; i++) {
                     console.log(quer.rows[i].age);
                 }
-
+                console.log(quer.rows);
                 res.render("signers", {
                     layout: "main",
                     results: quer.rows
@@ -301,31 +319,33 @@ app.post("/login", (req, res) => {
     } else {
         console.log(req.body.email);
         db.fetchUser(req.body.email)
-            .then(function(val) {
-                console.log("response:", val);
-                checkPassword(req.body.password, val.rows[0].password)
+            .then(function(data) {
+                console.log("response:", data);
+                checkPassword(req.body.password, data.rows[0].password)
                     .then(function(val) {
                         console.log("response2:", val);
                         if (val == true) {
-                            req.session.user = val.rows[0];
+                            req.session.user = data.rows[0];
                             res.redirect("/petition");
                         } else {
                             res.render("login", {
                                 layout: "main",
-                                mismatch: "err"
+                                mismatch: "err",
+                                mail: req.body.email
                             });
                         }
                     })
-                    .catch(res.render("error", {}));
+                    .catch(err => console.log("error1", err));
             })
-            .catch(res.render("error", {}));
+            .catch(err => console.log("error2", err));
     }
 });
 
 app.post("/profile", (req, res) => {
     if (req.body.age || req.body.city || req.body.homepage) {
+        console.log("URL:", req.body.homepage);
         if (
-            req.body.homepage != undefined &&
+            req.body.homepage != "" &&
             req.body.homepage.indexOf("http://") != 0 &&
             req.body.homepage.indexOf("https://") != 0
         ) {
@@ -333,7 +353,7 @@ app.post("/profile", (req, res) => {
         }
         db.addUserProfile(
             req.body.age || null,
-            req.body.city,
+            req.body.city.toLowerCase(),
             req.body.homepage,
             req.session.user.id
         )
@@ -377,9 +397,9 @@ app.post("/profile/edit", (req, res) => {
             });
     }
     function editProfile(hash) {
-        console.log(req.body.url);
+        console.log("URL:", req.body.url);
         if (
-            req.body.url != undefined &&
+            req.body.url != "" &&
             req.body.url.indexOf("http://") != 0 &&
             req.body.url.indexOf("https://") != 0
         ) {
@@ -392,7 +412,7 @@ app.post("/profile/edit", (req, res) => {
                 req.session.user.email = data.rows[0].email;
                 db.editProfile(
                     req.body.age,
-                    req.body.city,
+                    req.body.city.toLowerCase(),
                     req.body.url,
                     req.session.user.id
                 )
@@ -451,7 +471,7 @@ app.post("/thanks", (req, res) => {
 
 app.use(express.static("./public"));
 
-app.listen(8080, () => console.log("Listening!"));
+app.listen(process.env.PORT || 8080, () => console.log("Listening!"));
 
 //
 

@@ -2,11 +2,12 @@ var spicedPg = require("spiced-pg");
 const config = require("./config");
 
 var db = spicedPg(
-    "postgres:" +
-        config.user +
-        ":" +
-        config.pass +
-        "@localhost:5432/wintergreen-petition"
+    process.env.DATABASE_URL ||
+        "postgres:" +
+            config.user +
+            ":" +
+            config.pass +
+            "@localhost:5432/wintergreen-petition"
 );
 
 //SIGNATURES TABLE
