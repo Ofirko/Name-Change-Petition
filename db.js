@@ -75,3 +75,21 @@ module.exports.getCitySigners = function getCitySigners(name) {
         [name]
     );
 };
+
+module.exports.editUser = function editUser(fname, lname, email, password) {
+    return db.query(
+        "UPDATE users SET fname = $1, lname= $2, password = $4 WHERE email=$3 RETURNING *",
+        [fname, lname, email, password]
+    );
+};
+
+module.exports.editProfile = function editProfile(age, city, url, user_id) {
+    return db.query(
+        "INSERT INTO user_profiles (age, city, url, user_id) VALUES ($1, $2, $3, $4) ON CONFLICT (user_id) DO UPDATE SET age = $1, city = $2, url = $3 RETURNING *",
+        [age, city, url, user_id]
+    );
+};
+
+module.exports.deleteCurrentUserSig = function deleteCurrentUserSig(id) {
+    return db.query("DELETE FROM signatures WHERE id = $1", [id]);
+};

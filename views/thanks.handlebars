@@ -2,6 +2,12 @@
 
 <img id="sig" src= "{{current}}">
 <p><a href="/signers">Click here to view the signers list</a></p>
-<!-- <a href="">Click here to edit your profile</a>
-<a href="">Click here to delete your signature</a> -->
+
+<p><a href="/profile/edit">Click here to edit your profile</a></p>
+
  <script type="text/javascript" src= "script.js"></script>
+
+ <form method="POST">
+      <button id="unsign">Click here to delete your signature</button>
+      <input type="hidden" name="_csrf" value="{{csrfToken}}">
+  </form>

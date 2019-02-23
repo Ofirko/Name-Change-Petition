@@ -129,11 +129,35 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/profile", (req, res) => {
+    console.log(req.session.profile);
     if (req.session.user == undefined) {
         res.redirect("/register");
+    } else if (req.session.profile != undefined) {
+        res.redirect("/profile/edit");
     } else {
         res.render("profile", {
             layout: "main"
+            //GIVE IT VALUES HERE
+        });
+    }
+});
+
+app.get("/profile/edit", (req, res) => {
+    if (req.session.user == undefined) {
+        res.redirect("/register");
+    } else {
+        if (req.session.profile == undefined) {
+            req.session.profile = { age: "", city: "", url: "" };
+        }
+        console.log("profile existing:", req.session.profile);
+        res.render("edit", {
+            layout: "main",
+            fname: req.session.user.fname,
+            lname: req.session.user.lname,
+            email: req.session.user.email,
+            age: req.session.profile.age,
+            city: req.session.profile.city,
+            url: req.session.profile.url
             //GIVE IT VALUES HERE
         });
     }
@@ -270,16 +294,27 @@ app.post("/register", (req, res) => {
 
 app.post("/login", (req, res) => {
     if (req.body.email == `` || req.body.password == ``) {
-        res.render("error", {});
+        res.render("login", {
+            layout: "main",
+            empty: "err"
+        });
     } else {
         console.log(req.body.email);
         db.fetchUser(req.body.email)
             .then(function(val) {
-                console.log(val.rows[0].password);
+                console.log("response:", val);
                 checkPassword(req.body.password, val.rows[0].password)
                     .then(function(val) {
-                        req.session.user = val.rows[0];
-                        res.redirect("/petition");
+                        console.log("response2:", val);
+                        if (val == true) {
+                            req.session.user = val.rows[0];
+                            res.redirect("/petition");
+                        } else {
+                            res.render("login", {
+                                layout: "main",
+                                mismatch: "err"
+                            });
+                        }
                     })
                     .catch(res.render("error", {}));
             })
@@ -290,6 +325,7 @@ app.post("/login", (req, res) => {
 app.post("/profile", (req, res) => {
     if (req.body.age || req.body.city || req.body.homepage) {
         if (
+            req.body.homepage != undefined &&
             req.body.homepage.indexOf("http://") != 0 &&
             req.body.homepage.indexOf("https://") != 0
         ) {
@@ -301,7 +337,8 @@ app.post("/profile", (req, res) => {
             req.body.homepage,
             req.session.user.id
         )
-            .then(function() {
+            .then(function(data) {
+                req.session.profile = data.rows[0];
                 res.redirect("/petition");
             })
             .catch(err => {
@@ -311,6 +348,105 @@ app.post("/profile", (req, res) => {
     } else {
         res.redirect("/petition");
     }
+});
+
+app.post("/profile/edit", (req, res) => {
+    if (req.body.age == "") {
+        req.body.age = null;
+    }
+    if (req.body.password == ``) {
+        editProfile(req.session.user.password);
+    } else {
+        hashPassword(req.body.password)
+            .then(hashed => {
+                editProfile(hashed);
+            })
+            .catch(err => {
+                console.log("error 1:", err);
+                res.render("edit", {
+                    layout: "main",
+                    fname: req.session.user.fname,
+                    lname: req.session.user.lname,
+                    email: req.session.user.email,
+                    age: req.session.profile.age,
+                    city: req.session.profile.city,
+                    url: req.session.profile.url,
+                    err: "err",
+                    errpass: errpass
+                });
+            });
+    }
+    function editProfile(hash) {
+        console.log(req.body.url);
+        if (
+            req.body.url != undefined &&
+            req.body.url.indexOf("http://") != 0 &&
+            req.body.url.indexOf("https://") != 0
+        ) {
+            req.body.url = "http://" + req.body.url;
+        }
+        db.editUser(req.body.firstname, req.body.lastname, req.body.email, hash)
+            .then(data => {
+                req.session.user.fname = data.rows[0].fname;
+                req.session.user.lname = data.rows[0].lname;
+                req.session.user.email = data.rows[0].email;
+                db.editProfile(
+                    req.body.age,
+                    req.body.city,
+                    req.body.url,
+                    req.session.user.id
+                )
+                    .then(data => {
+                        req.session.profile.age = data.rows[0].age;
+                        req.session.profile.city = data.rows[0].city;
+                        req.session.profile.url = data.rows[0].url;
+                        res.redirect("/petition");
+                    })
+                    .catch(err => {
+                        console.log("error 2:", err);
+                        res.render("edit", {
+                            layout: "main",
+                            fname: req.session.user.fname,
+                            lname: req.session.user.lname,
+                            email: req.session.user.email,
+                            age: req.session.profile.age,
+                            city: req.session.profile.city,
+                            url: req.session.profile.url,
+                            errdb: "profile"
+                        });
+                    });
+            })
+            //     function(val) {
+            //     console.log(val.rows[0]);
+            //     req.session.user = val.rows[0];
+            //     res.redirect("/profile");
+            // }
+
+            .catch(err => {
+                console.log("error 3:", err);
+                res.render("edit", {
+                    layout: "main",
+                    fname: req.session.user.fname,
+                    lname: req.session.user.lname,
+                    email: req.session.user.email,
+                    age: req.session.profile.age,
+                    city: req.session.profile.city,
+                    url: req.session.profile.url,
+                    errdb: "user"
+                });
+            });
+    }
+});
+
+app.post("/thanks", (req, res) => {
+    db.deleteCurrentUserSig(req.session.signed)
+        .then(() => {
+            req.session.signed = undefined;
+            res.redirect("/petition");
+        })
+        .catch(err => {
+            console.log(err);
+        });
 });
 
 app.use(express.static("./public"));

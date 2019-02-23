@@ -1,0 +1,12 @@
+<h1>Edit your profile</h1>
+<form method="POST">
+    <input type= "email" name="email" placeholder="E-mail address" value="{{email}}"> </input>
+    <input type= "text" name="firstname" placeholder="First name" value="{{fname}}"> </input>
+    <input type= "text" name="lastname" placeholder="Last name" value="{{lname}}"> </input>
+    <input type= "password" name="password" placeholder="Password"> </input>
+    <input name="age" placeholder="Age" value="{{age}}"> </input>
+    <input type= "text" name="city" placeholder="City" value="{{city}}"> </input>
+    <input type= "text" name="url" placeholder="Homepage URL" value="{{url}}"> </input>
+    <input type="hidden" name="_csrf" value="{{csrfToken}}">
+<button> UPDATE </button>
+ </form>

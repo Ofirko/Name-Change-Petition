@@ -3,8 +3,16 @@
     background-color: azure;
     align-content: center;
     text-align: center;
+    outline: none;
 }
 
+table {
+    position: relative;
+    left: 25%;
+    width: 50%;
+    font-family: Futura;
+    text-align: center;
+}
 form {
     display: flex;
     flex-direction: column;
@@ -88,6 +96,8 @@ div {
 p a {
     position: relative;
     top: 100px;
+    font-size: 14px;
+    color: blue;
 }
 
 #bottomline {
@@ -97,4 +107,26 @@ p a {
 
 h3 {
     color: tomato;
+}
+
+#unsign {
+    width: auto;
+    position: relative;
+    top: 85px;
+    font-family: Futura;
+    background-color: azure;
+    align-content: center;
+    text-align: center;
+    border: none;
+    font-size: 14px;
+    color: blue;
+    text-decoration: underline;
+    outline: none;
+}
+#unsign:hover {
+    cursor: pointer;
+}
+
+tr#domestic {
+    visibility: collapse;
 }
