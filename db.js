@@ -1,5 +1,6 @@
 var spicedPg = require("spiced-pg");
-const config = require("./config");
+// BRING BACK IF USED ON LOCALHOST
+// const config = require("./config");
 
 var db = spicedPg(
     process.env.DATABASE_URL ||
