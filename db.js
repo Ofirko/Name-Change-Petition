@@ -1,15 +1,13 @@
 var spicedPg = require("spiced-pg");
 // BRING BACK IF USED ON LOCALHOST
 // const config = require("./config");
-
-var db = spicedPg(
-    process.env.DATABASE_URL ||
-        "postgres:" +
-            config.user +
-            ":" +
-            config.pass +
-            "@localhost:5432/wintergreen-petition"
-);
+let path =
+    "postgres:" +
+    config.user +
+    ":" +
+    config.pass +
+    "@localhost:5432/wintergreen-petition";
+var db = spicedPg(process.env.DATABASE_URL || path);
 
 //SIGNATURES TABLE
 
