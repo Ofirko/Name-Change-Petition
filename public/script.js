@@ -27,3 +27,16 @@ if (canv != null) {
         signing = false;
     });
 }
+
+let par = document.getElementsByClassName("collapsible");
+for (var i = 0; i < par.length; i++) {
+    par[i].addEventListener("click", function() {
+        this.classList.toggle("active");
+        let content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
+}

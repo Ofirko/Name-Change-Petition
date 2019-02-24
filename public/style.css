@@ -135,11 +135,20 @@ tr#domestic {
 .paragraph {
     width: 70%;
 }
+.active,
 .paragraph:hover {
-    border-radius: 50px;
+    border-radius: 20px;
     animation-name: hover;
     animation-duration: 1s;
     border: 2px solid transparent;
+}
+.content {
+    padding: 0 18px;
+    display: none;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: lemonchiffon;
 }
 
 @keyframes hover {
