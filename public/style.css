@@ -145,8 +145,8 @@ tr#domestic {
 .content {
     padding: 0 18px;
     display: none;
-    /* max-height: 0;
     overflow: hidden;
+    /* max-height: 0;
     transition: max-height 0.2s ease-out; */
     background-color: lemonchiffon;
 }
