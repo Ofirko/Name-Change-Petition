@@ -54,15 +54,12 @@ button {
 }
 
 #trans {
-    display: inline-block;
 }
 
 #self {
-    display: inline-block;
 }
 
 #domestic {
-    display: inline-block;
 }
 
 #sig {
@@ -122,6 +119,7 @@ h3 {
 
 p {
     padding: 7px;
+    padding-bottom: 15px;
     float: right;
     position: relative;
     top: -37px;
