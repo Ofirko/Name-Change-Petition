@@ -51,7 +51,7 @@ div p {
     width: 70%;
 }
 
-div img {
+.petition img {
     float: left;
     position: relative;
     left: 5%;
