@@ -144,6 +144,5 @@ p {
 }
 
 #bottomline {
-    position: relative;
-    top: 40em;
+    display: block;
 }
