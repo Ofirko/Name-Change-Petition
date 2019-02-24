@@ -153,13 +153,15 @@ p {
 }
 
 .paragraph:after {
-    content: "\002B";
-    color: white;
+    content: "\e114";
+    color: black;
     font-weight: bold;
-    float: right;
+    float: left;
     margin-left: 5px;
 }
 
 .active:after {
-    content: "\2212";
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
 }
