@@ -55,7 +55,7 @@ button {
 
 #self {
     position: relative;
-    bottom: 50px;
+    bottom: 60px;
 }
 
 #domestic {
@@ -138,8 +138,6 @@ p {
 .paragraph:hover {
     border-radius: 20px 20px 0px 0px;
     background-color: lemonchiffon;
-    border: 2px solid mistyrose;
-    border: 2px solid transparent;
 }
 .content {
     overflow: hidden;
