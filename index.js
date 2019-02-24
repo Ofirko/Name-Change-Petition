@@ -323,6 +323,12 @@ app.post("/login", (req, res) => {
         console.log(req.body.email);
         db.fetchUser(req.body.email)
             .then(function(data) {
+                if (data.rows[0] == undefined) {
+                    res.render("login", {
+                        layout: "main",
+                        nonex: "err"
+                    });
+                }
                 console.log("response:", data.rows[0]);
                 checkPassword(req.body.password, data.rows[0].password)
                     .then(function(val) {
