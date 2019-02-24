@@ -54,18 +54,12 @@ button {
 }
 
 #trans {
-    position: absolute;
-    top: 70%;
 }
 
 #self {
-    position: absolute;
-    top: 5%;
 }
 
 #domestic {
-    position: absolute;
-    top: 35%;
 }
 
 #sig {
@@ -128,10 +122,10 @@ tr#domestic {
 }
 
 p {
-    padding: 8px;
+    padding: 7px;
     float: right;
     position: relative;
-    top: -35px;
+    top: -37px;
     text-align: left;
     right: 10%;
     width: 70%;
