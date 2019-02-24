@@ -89,11 +89,6 @@ p a {
     color: blue;
 }
 
-#bottomline {
-    position: relative;
-    top: 30px;
-}
-
 h3 {
     color: tomato;
 }
@@ -153,4 +148,9 @@ p {
     /* max-height: 0;
     transition: max-height 0.2s ease-out; */
     background-color: lemonchiffon;
+}
+
+#bottomline {
+    position: absolute;
+    bottom: 30px;
 }
