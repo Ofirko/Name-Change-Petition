@@ -129,9 +129,12 @@ tr#domestic {
 
 p {
     position: relative;
+    top: -20px;
+    align: center;
     text-align: left;
     right: 10%;
     width: 70%;
+    border-radius: 0px 0px 20px 20px;
 }
 
 .active,
