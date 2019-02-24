@@ -53,7 +53,7 @@ module.exports.addUser = function addUser(
 
 module.exports.fetchUser = function fetchUser(email) {
     return db.query(
-        "SELECT * FROM users WHERE email = $1 JOIN signatures ON users.id = signatures.user_id",
+        "SELECT * FROM users JOIN signatures ON users.id = signatures.user_id WHERE email = $1",
         [email]
     );
     // INTENDING IT TO RETURN CURRENT USER VALUES
