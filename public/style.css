@@ -1,5 +1,5 @@
 * {
-    font-family: Futura;
+    font-family: Futura !important;
     background-color: azure;
     align-content: center;
     text-align: center;
@@ -36,6 +36,7 @@ button {
     width: 8%;
     border-radius: 100px;
     background-color: honeydew;
+    min-width: 80px;
 }
 
 :placeholder-shown {
