@@ -327,6 +327,8 @@ app.post("/login", (req, res) => {
                         console.log("response2:", val);
                         if (val == true) {
                             req.session.user = data.rows[0];
+                            req.session.user.id = data.rows[0].user_id;
+                            req.session.signed = data.rows[0].id;
                             res.redirect("/petition");
                         } else {
                             res.render("login", {
