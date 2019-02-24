@@ -328,9 +328,10 @@ app.post("/login", (req, res) => {
                     .then(function(val) {
                         console.log("response2:", val);
                         if (val == true) {
+                            req.session.signed = data.rows[0].id;
                             req.session.user = data.rows[0];
                             req.session.user.id = data.rows[0].user_id;
-                            req.session.signed = data.rows[0].id;
+                            console.log(req.session.signed);
                             res.redirect("/petition");
                         } else {
                             res.render("login", {
