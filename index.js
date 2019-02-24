@@ -321,7 +321,7 @@ app.post("/login", (req, res) => {
         console.log(req.body.email);
         db.fetchUser(req.body.email)
             .then(function(data) {
-                console.log("response:", data);
+                console.log("response:", data.rows[0]);
                 checkPassword(req.body.password, data.rows[0].password)
                     .then(function(val) {
                         console.log("response2:", val);
