@@ -8,7 +8,7 @@
         "start": "node index.js"
     },
     "engines": {
-        "node": "8.9.4"
+        "node": "10.15.0"
     },
     "author": "",
     "license": "ISC",
