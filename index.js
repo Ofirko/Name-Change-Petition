@@ -135,6 +135,8 @@ app.get("/login", (req, res) => {
 app.get("/logout", (req, res) => {
     if (req.session.user != undefined) {
         req.session.user = undefined;
+        req.session.profile = undefined;
+        req.session.signed = undefined;
         res.redirect("/register");
     } else {
         res.redirect("/petition");
