@@ -53,13 +53,19 @@ button {
     animation-duration: 1s;
 }
 
-#trans {
+#self {
+    position: relative;
+    bottom: 50px;
 }
 
-#self {
+#trans {
+    position: relative;
+    bottom: 100px;
 }
 
 #domestic {
+    position: relative;
+    bottom: 75px;
 }
 
 #sig {
@@ -118,7 +124,8 @@ h3 {
 }
 
 p {
-    padding-left: 7px;
+    padding-left: 20px;
+    padding-bottom: 10px;
     float: right;
     position: relative;
     top: -37px;
