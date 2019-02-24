@@ -52,7 +52,10 @@ module.exports.addUser = function addUser(
 };
 
 module.exports.fetchUser = function fetchUser(email) {
-    return db.query("SELECT * FROM users WHERE email = $1", [email]);
+    return db.query(
+        "SELECT * FROM users WHERE email = $1 JOIN signatures ON users.id = signatures.user_id",
+        [email]
+    );
     // INTENDING IT TO RETURN CURRENT USER VALUES
 };
 

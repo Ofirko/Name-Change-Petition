@@ -134,9 +134,7 @@ app.get("/login", (req, res) => {
 
 app.get("/logout", (req, res) => {
     if (req.session.user != undefined) {
-        req.session.user = undefined;
-        req.session.profile = undefined;
-        req.session.signed = undefined;
+        req.session = null;
         res.redirect("/register");
     } else {
         res.redirect("/petition");
@@ -316,7 +314,8 @@ app.post("/login", (req, res) => {
     if (req.body.email == `` || req.body.password == ``) {
         res.render("login", {
             layout: "main",
-            empty: "err"
+            empty: "err",
+            mail: req.body.email
         });
     } else {
         console.log(req.body.email);
@@ -494,30 +493,10 @@ app.listen(process.env.PORT || 8080, () => console.log("Listening!"));
 // so that it also gets data from the signatures table.
 // Thus you will be able to know whether the user has signed the petition or not as soon as they log in.
 //
-// NOTA BENE: Before you put the url a user specifies into the href attribute of a link,
-// you must make sure that it begins with either "http://" or "https://".
-// This is not just to ensure that the link goes somewhere outside of your site, althoug that is a benefit.
-// It is also important for security. Since browsers support Javascript URLs,
-// we must make sure that a malicious user can't create a link that runs Javascript code when other users click on it.
-//  You can decide whether to check the url when the user inputs it (before you insert it into the database)
-//   or when you get it out of the database (before you pass it to your template).
-//   If it doesn't start with "http://" or "https://", do not put it in an href attribute.
-
-//
-//layout doesnt work for city pages
 //
 // ADD HELMET, X-Frame-Options, Content-Security-Policy
-//BUILD MAIN
 //FIX ERROR HANDLEBAR
 
-//When you want to end the session (i.e, log out the user), you can set req.session to null.
-//
-//
-//
-//
-//PROFILE fields in this form are optional.
-
-//LOGIN PAGE DOESNT WORK
 // You should add to this object properties that you are likely to use frequently,
 // such as the user's first name, last name, and signature id if the user has signed the petition.
 //
