@@ -58,14 +58,14 @@ button {
     bottom: 50px;
 }
 
-#trans {
-    position: relative;
-    bottom: 100px;
-}
-
 #domestic {
     position: relative;
-    bottom: 75px;
+    bottom: 60px;
+}
+
+#trans {
+    position: relative;
+    bottom: 70px;
 }
 
 #sig {
@@ -124,8 +124,7 @@ h3 {
 }
 
 p {
-    padding-left: 20px;
-    padding-bottom: 10px;
+    padding-left: 13px;
     float: right;
     position: relative;
     top: -37px;
