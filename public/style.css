@@ -153,16 +153,13 @@ p {
 }
 
 .paragraph:after {
-    font-family: "Glyphicons Halflings";
-    content: "\e114";
+    content: "\002B";
     color: black;
     font-weight: bold;
-    float: left;
-    margin-left: 5px;
+    float: right;
+    margin-right: 20%;
 }
 
 .active:after {
-    -webkit-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    transform: rotate(180deg);
+    content: "\2212";
 }
