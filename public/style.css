@@ -153,6 +153,7 @@ p {
 }
 
 .paragraph:after {
+    font-family: "Glyphicons Halflings";
     content: "\e114";
     color: black;
     font-weight: bold;
