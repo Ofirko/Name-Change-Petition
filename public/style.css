@@ -128,7 +128,6 @@ tr#domestic {
 }
 
 p {
-    float: right;
     position: relative;
     text-align: left;
     right: 10%;
