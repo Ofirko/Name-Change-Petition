@@ -138,8 +138,8 @@ tr#domestic {
 .active,
 .paragraph:hover {
     border-radius: 20px;
-    animation-name: hover;
-    animation-duration: 1s;
+    background-color: lemonchiffon;
+    border: 2px solid mistyrose;
     border: 2px solid transparent;
 }
 .content {
@@ -149,13 +149,4 @@ tr#domestic {
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     background-color: lemonchiffon;
-}
-
-@keyframes hover {
-    from {
-    }
-    to {
-        background-color: lemonchiffon;
-        border: 2px solid mistyrose;
-    }
 }
