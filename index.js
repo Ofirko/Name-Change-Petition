@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const db = require("./db");
-const config = require("./config");
+// const config = require("./config");
 const spicedPg = require("spiced-pg");
 const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
