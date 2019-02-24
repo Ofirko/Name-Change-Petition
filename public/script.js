@@ -28,7 +28,7 @@ if (canv != null) {
     });
 }
 
-let par = document.getElementsByClassName("collapsible");
+let par = document.getElementsByClassName("paragraph");
 for (var i = 0; i < par.length; i++) {
     par[i].addEventListener("click", function() {
         this.classList.toggle("active");
