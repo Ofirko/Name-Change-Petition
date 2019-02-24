@@ -131,3 +131,17 @@ h3 {
 tr#domestic {
     visibility: collapse;
 }
+
+.paragraph:hover {
+    animation-name: hover;
+    animation-duration: 1s;
+}
+
+@keyframes hover {
+    from {
+    }
+    to {
+        border-radius: 50px;
+        border: 2px solid black;
+    }
+}
