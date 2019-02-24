@@ -410,6 +410,16 @@ app.post("/profile/edit", (req, res) => {
                 req.session.user.fname = data.rows[0].fname;
                 req.session.user.lname = data.rows[0].lname;
                 req.session.user.email = data.rows[0].email;
+                console.log(
+                    "req.body.age:",
+                    req.body.age,
+                    "req.body.city.toLowerCase():",
+                    req.body.city.toLowerCase(),
+                    "req.body.url:",
+                    req.body.url,
+                    "req.session.user.id:",
+                    req.session.user.id
+                );
                 db.editProfile(
                     req.body.age,
                     req.body.city.toLowerCase(),
