@@ -133,15 +133,16 @@ tr#domestic {
 }
 
 .paragraph:hover {
+    border-radius: 50px;
     animation-name: hover;
     animation-duration: 1s;
+    border: 2px solid transparent;
 }
 
 @keyframes hover {
     from {
     }
     to {
-        border-radius: 50px;
         border: 2px solid black;
     }
 }
