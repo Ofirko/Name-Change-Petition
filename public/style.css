@@ -121,6 +121,7 @@ tr#domestic {
 }
 
 .paragraph {
+    float: right;
     position: relative;
     right: 10%;
     width: 70%;
@@ -128,9 +129,9 @@ tr#domestic {
 }
 
 p {
+    float: right;
     position: relative;
-    top: -20px;
-    align: center;
+    top: -30px;
     text-align: left;
     right: 10%;
     width: 70%;
