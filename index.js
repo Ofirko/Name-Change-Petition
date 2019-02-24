@@ -203,7 +203,8 @@ app.get("/thanks", (req, res) => {
     } else {
         db.getCurrentUserSig(req.session.signed)
             .then(function(cur) {
-                console.log(cur);
+                console.log(req.session.signed);
+                console.log(cur.rows[0]);
                 let fname = req.session.user.fname;
                 res.render("thanks", {
                     layout: "main",
