@@ -136,7 +136,6 @@ p {
     border: 2px solid transparent;
 }
 .content {
-    display: none;
     overflow: hidden;
     max-height: 0;
     transition: max-height 0.2s ease-out;
