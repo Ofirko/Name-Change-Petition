@@ -54,12 +54,15 @@ button {
 }
 
 #trans {
+    display: inline-block;
 }
 
 #self {
+    display: inline-block;
 }
 
 #domestic {
+    display: inline-block;
 }
 
 #sig {
@@ -119,6 +122,7 @@ h3 {
 
 p {
     padding: 7px;
+    padding-bottom: 15px;
     float: right;
     position: relative;
     top: -37px;
@@ -138,8 +142,8 @@ p {
 .content {
     display: none;
     overflow: hidden;
-    /* max-height: 0;
-    transition: max-height 0.2s ease-out; */
+    max-height: 0;
+    transition: max-height 0.2s ease-out;
     background-color: lemonchiffon;
 }
 
