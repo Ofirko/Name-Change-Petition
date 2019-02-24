@@ -54,12 +54,15 @@ button {
 }
 
 #trans {
+    display: inline-block;
 }
 
 #self {
+    display: inline-block;
 }
 
 #domestic {
+    display: inline-block;
 }
 
 #sig {
@@ -108,10 +111,6 @@ h3 {
     cursor: pointer;
 }
 
-tr#domestic {
-    visibility: collapse;
-}
-
 .paragraph {
     padding: 5px;
     float: right;
@@ -148,6 +147,6 @@ p {
 }
 
 #bottomline {
-    position: absolute;
-    bottom: 30px;
+    position: relative;
+    top: 100px;
 }
