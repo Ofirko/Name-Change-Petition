@@ -140,7 +140,7 @@ tr#domestic {
     border: 2px solid transparent;
 }
 .content {
-    padding: 0 18px;
+    /* padding: 0 18px; */
     display: none;
     overflow: hidden;
     /* max-height: 0;
