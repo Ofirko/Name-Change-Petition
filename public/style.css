@@ -129,7 +129,6 @@ tr#domestic {
 }
 
 .paragraph {
-    float: right;
     position: relative;
     right: 10%;
     width: 70%;
