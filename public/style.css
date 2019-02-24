@@ -140,9 +140,6 @@ p {
     background-color: lemonchiffon;
 }
 
-.active {
-    padding-bottom: 10px;
-}
 .content {
     overflow: hidden;
     max-height: 0;
@@ -153,4 +150,16 @@ p {
 #bottomline {
     display: inline-block;
     position: relative;
+}
+
+.paragraph:after {
+    content: "\002B";
+    color: white;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+}
+
+.active:after {
+    content: "\2212";
 }
