@@ -16,9 +16,11 @@ IN {{city}}
     <td><h2>
 {{this.age}}
 </h2></td>
+{{#if city}} {{else}}
 <td><h2>
 <a href= "/signers/{{this.city}}">{{this.city}}</a>
 </h2></td>
+{{/if}}
 </tr>
 {{/results}}
 </table>
