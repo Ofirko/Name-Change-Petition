@@ -49,8 +49,6 @@ button {
     left: 5%;
     width: 80px;
     height: 80px;
-    animation-name: pop;
-    animation-duration: 1s;
 }
 
 #self {
@@ -162,4 +160,9 @@ p {
 
 .active:after {
     content: "\2212";
+}
+
+.thanks {
+    align-content: center;
+    text-align: center;
 }
