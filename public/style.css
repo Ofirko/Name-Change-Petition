@@ -68,7 +68,7 @@ button {
 
 #sig {
     position: relative;
-    align-content: center;
+    left: 40%;
     top: 60px;
     border: 1px solid black;
     animation-name: pop;
@@ -99,6 +99,7 @@ h3 {
     width: auto;
     position: relative;
     top: 85px;
+    left: 40%;
     font-family: Futura;
     background-color: azure;
     align-content: center;
