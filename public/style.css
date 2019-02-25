@@ -171,3 +171,7 @@ h3 {
     border: none;
     border-radius: 0px;
 }
+
+br {
+    margin-bottom: 10px;
+}
