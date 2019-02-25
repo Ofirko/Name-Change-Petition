@@ -68,6 +68,7 @@ button {
 
 #sig {
     position: relative;
+    align-content: center;
     top: 60px;
     border: 1px solid black;
     animation-name: pop;
