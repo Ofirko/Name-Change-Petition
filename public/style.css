@@ -99,7 +99,7 @@ h3 {
     width: auto;
     position: relative;
     top: 85px;
-    left: 40%;
+    left: 80%;
     font-family: Futura;
     background-color: azure;
     align-content: center;
@@ -123,7 +123,7 @@ h3 {
     display: inline-block;
 }
 
-p {
+.content {
     padding-left: 10px;
     float: right;
     position: relative;
@@ -169,4 +169,9 @@ p {
     text-align: center;
     position: relative;
     top: 200px;
+}
+
+#list {
+    border: none;
+    border-radius: 0px;
 }
